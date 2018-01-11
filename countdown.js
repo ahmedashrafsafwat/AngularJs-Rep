@@ -27,7 +27,7 @@ function updateTimer(deadline){
 var stopwatcher = "";
 function stopWatch(count) {
     if(!flag)
-   stopwatcher = moment().day(0).hour(0).minute(0).second(count++) ;
+   stopwatcher = moment().hour(0).minute(0).second(count++) ;
     else 
         count = 0;
     

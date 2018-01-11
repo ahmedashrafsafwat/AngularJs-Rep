@@ -4,6 +4,8 @@ var moment = require('moment');
 var events = require('events');
 const excel = require('node-excel-export');
 var XLSX = require('xlsx');
+var Excel = require('exceljs');
+
 var fs = require('fs');
 var app = angular.module('myApp', []);
 app.controller('myController', function($scope){
@@ -21,7 +23,7 @@ app.controller('myController', function($scope){
             "consolesCat" : 
         [{name:"Playstation 3" , value:"1"}, 
         {name:"Playstation 4", value:"2"}, 
-         {name:"xbox 360",value:"3"}],
+         {name:"Playstation 4 - C2",value:"3"}],
             
             "timeCats": 
                 [{name:"30 mins", value: "1"},
@@ -46,7 +48,7 @@ app.controller('myController', function($scope){
             "consolesCat" : 
                     [{name:"Playstation 3" , value:"1"}, 
                     {name:"Playstation 4", value:"2"}, 
-                    {name:"xbox 360",value:"3"}],
+                    {name:"Playstation 4 - C2",value:"3"}],
             "timeCats": 
                 [{name:"30 mins", value: "1"},
                 {name:"1 hour" , value: "2"},
@@ -148,7 +150,7 @@ app.controller('myController', function($scope){
              findAndChangePrice(clientId ,"10 L.E");
               startTimer("clock", deadline, clientId);
          }
-         else if ( consoleDisplay === "xbox 360" && timeDisplay === "30 mins") 
+         else if ( consoleDisplay === "Playstation 4 - C2" && timeDisplay === "30 mins") 
          {
            //  alert("The price is 10 for 30 mins" );
               deadline = moment().add(30,'minutes');
@@ -156,7 +158,7 @@ app.controller('myController', function($scope){
              findAndChangePrice(clientId ,"10 L.E");
               startTimer("clock", deadline, clientId);
          }
-         else if ( consoleDisplay === "xbox 360" && timeDisplay === "1 hour") 
+         else if ( consoleDisplay === "Playstation 4 - C2" && timeDisplay === "1 hour") 
          {
             // alert("The price is 20 for 1 hour" );
               deadline = moment().add(1,'hours');
@@ -164,7 +166,7 @@ app.controller('myController', function($scope){
              findAndChangePrice(clientId ,"20 L.E");
               startTimer("clock", deadline, clientId);
          }
-         else if ( consoleDisplay === "xbox 360" && timeDisplay === "2 hours") 
+         else if ( consoleDisplay === "Playstation 4 - C2" && timeDisplay === "2 hours") 
          {
            //  alert("The price is 40 for 2 hours" );
               deadline = moment().add(2,'hours');
@@ -224,7 +226,7 @@ app.controller('myController', function($scope){
              findAndChangeIsOpen(clientId);
               startTimer("clock", 0 , clientId);
          }
-           else if ( consoleDisplay === "xbox 360" && timeDisplay === "open") 
+           else if ( consoleDisplay === "Playstation 4 - C2" && timeDisplay === "open") 
          {
            // alert("THE TIME IS OPEN !!!" );
               deadline = moment().add(2,'hours');
@@ -251,7 +253,7 @@ app.controller('myController', function($scope){
     $scope.consoleModel = {};
     $scope.Time = {};
    $scope.consolesCat = [
-       {name:"Playstation 3" , value:"1"}, {name:"Playstation 4", value:"2"}, {name:"xbox 360",value:"3"}];
+       {name:"Playstation 3" , value:"1"}, {name:"Playstation 4", value:"2"}, {name:"Playstation 4 - C2",value:"3"}];
   /*  $scope.timeCats= [
         {name:"30 mins", value: "1"},
         {name:"1 hour" , value: "2"},
@@ -281,6 +283,8 @@ app.controller('myController', function($scope){
         
       var oneMinPriceX4 = 20/60;
       var oneMinPrice3 = 10/60;
+        var oneHourPriceX4 = 20;
+        var oneHourPrice3=10;
       for (var i in $scope.clients) {
                  if ($scope.clients[i].clientId == clientId) {
                      $scope.clients[i].openTimeStoped=true;
@@ -289,22 +293,22 @@ app.controller('myController', function($scope){
 
         }
         
-         
-       
-        var StoppedTime = stopwatcher;
+ 
+        var StoppedTime = timer.total;
          var clock = document.getElementById(clientId);
       var timerInterval = setInterval(function(){  
          clock.innerHTML = '<span>' + stopwatcher.format("dd") +'</span>'
                     + '<span>' + StoppedTime.format("HH") + '</span>'
                     + '<span>' + StoppedTime.format("mm") + '</span>'
                     + '<span>' + StoppedTime.format("ss") + '</span>';
-        console.log(StoppedTime.format("HH")+':'+StoppedTime.format("mm")+':'+StoppedTime.format("ss"));
-      }, 1000);
         
-        if ( consoleDisplay === "xbox 360" && timeDisplay === "open") 
+      }, 1000);
+         
+        
+        if ( consoleDisplay === "Playstation 4 - C2" && timeDisplay === "open") 
         {
            
-            var price = oneMinPriceX4*Number(StoppedTime.format("mm"))
+            var price = oneMinPriceX4*Number(StoppedTime.format("mm")) + oneHourPriceX4* Number(StoppedTime.format("HH"));
              var price2 = price.toFixed(2);
             findAndChangePrice ( clientId, (price2.toString()+ " L.E"));
             console.log("PRICE OF OPEN CALCULATED !!!");
@@ -312,17 +316,17 @@ app.controller('myController', function($scope){
         else if ( consoleDisplay === "Playstation 4" && timeDisplay === "open") 
         {
             
-            var price = oneMinPriceX4*Number(StoppedTime.format("mm"));
+            var price = oneMinPriceX4*Number(StoppedTime.format("mm")) + oneHourPriceX4* Number(StoppedTime.format("HH"));
             var price2 = price.toFixed(2);
             findAndChangePrice ( clientId, (price2.toString()+ " L.E"));
             console.log("PRICE OF OPEN CALCULATED !!!");
-        }else if ( consoleDisplay === "PLaystation 3" && timeDisplay === "open") 
+        }else if ( consoleDisplay === "Playstation 3" && timeDisplay === "open") 
         {
             
-            var price = oneMinPrice3*Number(StoppedTime.format("mm"));
+            var price = oneMinPrice3*Number(StoppedTime.format("mm")) + oneHourPrice3* Number(StoppedTime.format("HH"));
             var price2 = price.toFixed(2);
             findAndChangePrice ( clientId, (price2.toString()+ " L.E") );
-            console.log("PRICE OF OPEN CALCULATED !!!");
+            console.log("PRICE OF Ps3 OPEN CALCULATED !!!");
         }
         
     }
@@ -331,13 +335,56 @@ app.controller('myController', function($scope){
     {
        console.log("I am Clicked");
         
-        var table = document.getElementById('sheetjs');
-        var wb = XLSX.utils.table_to_book(table);
-        XLSX.writeFile(wb, 'out.xlsx', function (err) {
-    if (err) throw err;
-    console.log('It\'s saved!');
-});
+        var workbook = new Excel.Workbook();   
+        file = 'testfile.xlsx'
+     
+        
+       var excelClients = [];
+       var tempClients = [];
+        excelClients = arrayInputer();
+     
+   
+        
+    /*    var sheet = workbook.addWorksheet('rssi');
+        sheet.addRows(excelClients);
+        workbook.xlsx.writeFile(file)
+               .then(function() {
+                   console.log('Array added and then file saved.')
+               });*/
+        
+        workbook.xlsx.readFile(file)
+    .then(function() {
+            console.log("File Saved In New !!!");
+        var worksheet = workbook.getWorksheet(1);
+        worksheet.addRows(excelClients);
+        return {h1: workbook.xlsx.writeFile('new.xlsx') , h2: workbook.xlsx.writeFile(file) };
+    })
+            
+     
 
+    }
+    function arrayInputer () 
+    {
+        
+        var newClients = [];
+        var excelClients = [];
+        for (var i in $scope.clients) {
+            var strReplacer = $scope.clients[i].price;
+            var result = strReplacer.replace(" L.E", "");
+            console.log(result);
+            
+               newClients.push([$scope.clients[i].startTime.format("DD-MM-YYYY") ,
+                           $scope.clients[i].startTime.format('HH:mm') ,
+                          Number(result)])
+             /*arr2[i]=$scope.clients[i].startTime.format('HH:mm');
+            arr3[i]=$scope.clients[i].price;*/
+            
+        }
+        
+        
+        
+        return newClients;
+       
     }
       
        
