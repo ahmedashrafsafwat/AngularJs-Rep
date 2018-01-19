@@ -7,7 +7,7 @@ var XLSX = require('xlsx');
 var Excel = require('exceljs');
 
 var fs = require('fs');
-var app = angular.module('myApp', []);
+var app = angular.module('myApp', ['ngAnimate']);
 app.controller('myController', function($scope){
     const heading = [
   [ 'a1',  'b1',  'c1'],
@@ -38,6 +38,7 @@ app.controller('myController', function($scope){
         
     }
     ];
+    
     //console.log($scope.clients);
     $scope.ClientsNumbers = 1; 
     $scope.addClient =function()
@@ -67,8 +68,12 @@ app.controller('myController', function($scope){
         });
         
     }
+
+
         var consoleDisplay = "";
          var timeDisplay = "";
+
+
      $scope.changeConsole = function (consoleCatModel) {    
            consoleDisplay = consoleCatModel;
            // console.log("from inside the start button" + consoleDisplay);
@@ -81,14 +86,19 @@ app.controller('myController', function($scope){
              timeDisplay = timeCatModel;
              return timeCatModel;
        }
-    
+
        function findAndChangePrice ( clientId, price ) {
-               for (var i in $scope.clients) {
+        
+                for (var i in $scope.clients) {
                  if ($scope.clients[i].clientId == clientId) {
                     $scope.clients[i].price = price;
                     break; //Stop this loop, we found it!
                  }
                }
+
+
+          
+              
             }
      function findAndChangeIsOpen ( clientId ) {
                for (var i in $scope.clients) {
@@ -120,7 +130,7 @@ app.controller('myController', function($scope){
          findAndChangeStartTime(clientId);
           
    //var d = moment(now.diff(deadline));
-    console.log(clientId);
+    
    // console.log(moment(deadline.diff(now)).format("hh:mm:ss"));
         
          
@@ -229,7 +239,7 @@ app.controller('myController', function($scope){
            else if ( consoleDisplay === "Playstation 4 - C2" && timeDisplay === "open") 
          {
            // alert("THE TIME IS OPEN !!!" );
-              deadline = moment().add(2,'hours');
+            //  deadline = moment().add(2,'hours');
             //$scope.stopHidden = true;   
             // findAndChangePrice(clientId ,"20 L.E");
              findAndChangeIsOpen(clientId);
@@ -276,7 +286,9 @@ app.controller('myController', function($scope){
         if($scope.console == "playstation 3")
             $scope.price = "5 L.E";
         }*/
-            
+
+
+     
   
     $scope.stopTimer = function (clientId) 
     {
@@ -295,16 +307,9 @@ app.controller('myController', function($scope){
         
  
         var StoppedTime = timer.total;
-         var clock = document.getElementById(clientId);
-      var timerInterval = setInterval(function(){  
-         clock.innerHTML = '<span>' + stopwatcher.format("dd") +'</span>'
-                    + '<span>' + StoppedTime.format("HH") + '</span>'
-                    + '<span>' + StoppedTime.format("mm") + '</span>'
-                    + '<span>' + StoppedTime.format("ss") + '</span>';
         
-      }, 1000);
          
-        
+    /*    
         if ( consoleDisplay === "Playstation 4 - C2" && timeDisplay === "open") 
         {
            
@@ -312,6 +317,8 @@ app.controller('myController', function($scope){
              var price2 = price.toFixed(2);
             findAndChangePrice ( clientId, (price2.toString()+ " L.E"));
             console.log("PRICE OF OPEN CALCULATED !!!");
+           
+            
         }
         else if ( consoleDisplay === "Playstation 4" && timeDisplay === "open") 
         {
@@ -327,7 +334,10 @@ app.controller('myController', function($scope){
             var price2 = price.toFixed(2);
             findAndChangePrice ( clientId, (price2.toString()+ " L.E") );
             console.log("PRICE OF Ps3 OPEN CALCULATED !!!");
-        }
+        }*/
+        
+
+        calculatePrice( clientId, consoleDisplay, timeDisplay );
         
     }
     

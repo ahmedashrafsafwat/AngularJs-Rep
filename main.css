@@ -26,6 +26,33 @@
   }
 }
    
+
+
+
+table#table{
+  border-collapse: separate;
+  border-spacing: 0 2em;
+  border: 1px solid #ddd;
+  
+   
+}
+ td {
+  border-bottom: 1px solid #ddd;
+ 
+  
+}
+.btn-primary ,  .btn-primary:active, .btn-primary:visited{
+  background-color: #2b2a2a !important
+}
+.btn-primary:hover 
+{
+  background-color: #585858 !important
+}
+
+
+
+
+
 h1 {
     color: rgb(125, 129, 141)
 }
@@ -52,16 +79,16 @@ h1 {
   box-sizing: border-box;
 }
 .clock span:nth-child(1){
-  background: #fa5559;
+  background: #403e41;
 }
 .clock span:nth-child(2){
-  background: #26c2b9;
+  background: #403e41;
 }
 .clock span:nth-child(3){
-  background: #f6bc58;
+  background: #403e41;
 }
 .clock span:nth-child(4){
-  background: #2dcb74;
+  background: #403e41;
 }
 .clock:after{
   content: "";
@@ -82,6 +109,62 @@ h1 {
 
 span.turn{
   animation: turn 0.7s ease forwards;
+}
+
+.showRow {
+
+  -webkit-transition: 1s linear all;
+  transition: 1s linear all;
+}
+
+
+.showRow.ng-move,
+.showRow.ng-enter,
+.showRow.ng-leave {
+    -webkit-transition:all linear 0.5s;
+    transition:all linear 0.5s;
+}
+
+.showRow.ng-leave.ng-leave-active,
+.showRow.ng-move,
+.showRow.ng-enter {
+    opacity:0;
+    max-height:0;
+}
+
+.showRow.ng-leave,
+.showRow.ng-move.ng-move-active,
+.showRow.ng-enter.ng-enter-active {
+    opacity:1;
+    max-height:40px;
+}
+
+/**
+ * Stagger Leave (hide) animation
+ */
+.showRow.ng-leave-stagger {
+    /* this will have a 100ms delay between each successive leave animation */
+    -webkit-transition-delay: 0.2s;
+    transition-delay: 0.2s;
+
+    /* in case the stagger doesn't work then these two values
+     must be set to 0 to avoid an accidental CSS inheritance */
+    -webkit-transition-duration: 0s;
+    transition-duration: 0s;
+}
+
+/**
+ * Stagger ENTER ANIMATION
+ */
+.showRow.ng-enter-stagger {
+    /* this will have a 100ms delay between each successive enter animation */
+    -webkit-transition-delay: 0.2s;
+    transition-delay: 0.2s;
+
+    /* in case the stagger doesn't work then these two values
+     must be set to 0 to avoid an accidental CSS inheritance */
+    -webkit-transition-duration: 0s;
+    transition-duration: 0s;
 }
 
 @keyframes turn{
