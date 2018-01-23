@@ -34,7 +34,8 @@ app.controller('myController', function($scope){
         "price" : "NaN",
         "isOpen":false,
         "startTime":"NaN" ,
-        "openTimeStoped":false
+        "openTimeStoped":false,
+        "timeSpent": String
         
     }
     ];

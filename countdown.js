@@ -24,17 +24,35 @@ function updateTimer(deadline){
 }
 
 
+
+
 var stopwatcher = "";
-function stopWatch(count) {
-    if(!flag)
-   stopwatcher = moment().hour(0).minute(0).second(count++) ;
+function stopWatch(id , count) {
+  
+  var $scope = getScope('myController');
+    if(!flag){
+   stopwatcher = moment().hour(1).minute(30).second(count++) ;
+   for(var i in $scope.clients){
+          
+    if($scope.clients[i].clientId == id) 
+       {
+        
+          $scope.clients[i].timeSpent = stopwatcher;
+          
+       }
+    }
+    }
     else 
         count = 0;
+        
+      
+    
     
         //stopwatcher.add(1,"seconds");
   //  console.log(count);
   // console.log(stopwatcher);
     return    {
+      'id':id,
     'days': stopwatcher.format("dd"),
     'hours': stopwatcher.format("HH"),
     'minutes': stopwatcher.format("mm"),
@@ -79,7 +97,7 @@ var clientsArr = $scope.clients;
          }
       }
       if (deadline === 0) { 
-          timer =stopWatch(updatedCounter);
+          timer =stopWatch(clientId ,updatedCounter);
           updatedCounter = timer.count; 
 
          
@@ -125,38 +143,47 @@ function calculatePrice (clientId,consoleDisplay , timeDisplay)
   var oneMinPrice3 = 10/60;
   var oneHourPriceX4 = 20;
   var oneHourPrice3=10;
-
+  var totalTimeSpent = "";
+  var $scope = getScope('myController');
+  for(var i in $scope.clients)
+  {
+    if($scope.clients[i].clientId==clientId) 
+    {
+       totalTimeSpent = $scope.clients[i].timeSpent;
+      
+    }
+  }
   if ( consoleDisplay === "Playstation 4 - C2" && timeDisplay === "open") 
   {
      
-      var price = oneMinPriceX4*Number(stopwatcher.format("mm")) + oneHourPriceX4* Number(stopwatcher.format("HH"));
+      var price = oneMinPriceX4*Number(totalTimeSpent.format("mm")) + oneHourPriceX4* Number(totalTimeSpent.format("HH"));
        var price2 = price.toFixed(2);
        
       findAndChangePrice ( clientId, (price2.toString()+ " L.E"));
-      console.log("PRICE OF OPEN CALCULATED !!!");
+      
      
       
   }
   else if ( consoleDisplay === "Playstation 4" && timeDisplay === "open") 
   {
       
-      var price = oneMinPriceX4*Number(stopwatcher.format("mm")) + oneHourPriceX4* Number(stopwatcher.format("HH"));
+      var price = oneMinPriceX4*Number(totalTimeSpent.format("mm")) + oneHourPriceX4* Number(totalTimeSpent.format("HH"));
       var price2 = price.toFixed(2);
       findAndChangePrice ( clientId, (price2.toString()+ " L.E"));
-      console.log("PRICE OF OPEN CALCULATED !!!");
+     
   }else if ( consoleDisplay === "Playstation 3" && timeDisplay === "open") 
   {
       
-      var price = oneMinPrice3*Number(stopwatcher.format("mm")) + oneHourPrice3* Number(stopwatcher.format("HH"));
+      var price = oneMinPrice3*Number(totalTimeSpent.format("mm")) + oneHourPrice3* Number(totalTimeSpent.format("HH"));
       var price2 = price.toFixed(2);
       findAndChangePrice ( clientId, (price2.toString()+ " L.E") );
-      console.log("PRICE OF Ps3 OPEN CALCULATED !!!");
+     
   }
 }
 
 function findAndChangePrice ( clientId, price ) {
   var $scope = getScope('myController');
-  console.log("the caluclated price is " + price); 
+  
   for (var i in $scope.clients) {
    if ($scope.clients[i].clientId == clientId) {
       $scope.clients[i].price = price;
