@@ -1,6 +1,6 @@
-# PLaystation Net Cafe
+# PLaystation Gaming Store Management System
 
-This desktop app will help you manage Cypernet cafe right from your computer. The program is sold to 4 playstation gameing stores, beautiful dynamic UI that is easy to use by any user. it features both a stopwatch and a countdown timers, add and remove clients, cost calculation for each client, ablity to add extra playstation controllers for each client and calculate their added cost, Calculation of the total number of visted clients and the earning of that day and save the earning to excel file sheet.
+This desktop app will help you manage Cypernet cafe right from your computer. The program is currently operational in 4 playstation gaming stores, The gaming stores' managers love it, It offers beautiful dynamic UI that is easy to use by any user. features both a stopwatch and a countdown timers, add and remove clients, cost calculation for each client, ablity to add extra playstation controllers for each client and calculate their added cost, Calculation of the total number of visted clients and the earning of that day and save the earning to excel file sheet.
 Built with Nodejs, AngularJs and packaged via Electron packager for building the desktop applications, The front end is written in html5,javascript,jquery, CSS3 and bootstrap4.
 
 
